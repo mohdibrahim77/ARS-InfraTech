@@ -1,5 +1,7 @@
 # A.R.S Infratech — website
 
+**Live:** https://ars-infratech.pages.dev
+
 Interactive 3D real-estate & construction website for **A.R.S Infratech**, Bengaluru.
 
 The look follows the Times Estates template (white utility bar and header, orange active menu item,
@@ -18,6 +20,7 @@ npm run test:e2e  # 151 automated checks (needs `npm run dev` running; uses Micr
 ```
 
 `npm run test:e2e -- mobile` (or `desktop`, `reduced`, `nowebgl`) runs one suite.
+Test the live site with `BASE_URL=https://ars-infratech.pages.dev npm run test:e2e`.
 Set `SHOTS_DIR=some-folder` to save screenshots of every section.
 
 ## Deploy (Cloudflare Pages)

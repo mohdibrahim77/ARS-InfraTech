@@ -6,6 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const BASE = process.env.BASE_URL || 'http://localhost:5173';
+// Site content comes from the project files, so the suite runs against dev, preview or the live site.
+const loadData = () => import(new URL('../src/data.js', import.meta.url).href);
 const SHOTS = process.env.SHOTS_DIR || '';
 if (SHOTS) fs.mkdirSync(SHOTS, { recursive: true });
 
@@ -78,10 +80,7 @@ const brokenImages = (page) => page.$$eval('img', (imgs) => imgs.filter((i) => (
 async function desktop(browser) {
   const S = 'desktop';
   const { context, page, errors } = await openPage(browser);
-  const data = await page.evaluate(async () => {
-    const d = await import('/src/data.js');
-    return { properties: d.properties, markets: d.markets, locations: d.locations, partners: d.partners, commission: d.commission };
-  });
+  const data = await loadData();
 
   check(S, 'title', (await page.title()).includes('A.R.S Infratech'));
   const logos = await page.$$eval('.header .logo img', (imgs) => imgs.map((i) => ({ src: i.getAttribute('src'), ok: i.complete && i.naturalWidth > 0 })));
